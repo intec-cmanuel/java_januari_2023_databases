@@ -3,6 +3,8 @@ package be.intecbrussel.service;
 import be.intecbrussel.model.Account;
 import be.intecbrussel.model.User;
 
+import java.util.Optional;
+
 public class LoginService {
     private UserService userService = new UserService();
 
@@ -11,5 +13,11 @@ public class LoginService {
         User user = new User(fname, lname, account);
 
         return userService.createUser(user);
+    }
+
+
+    public Optional<User> login(String email, String passw) {
+
+        return userService.loginUser(email, passw);
     }
 }

@@ -1,7 +1,10 @@
 package be.intecbrussel.service;
 
+import be.intecbrussel.model.Account;
 import be.intecbrussel.model.User;
 import be.intecbrussel.repository.UserRepository;
+
+import java.util.Optional;
 
 public class UserService {
     private AccountService accountService = new AccountService();
@@ -15,5 +18,19 @@ public class UserService {
         }
 
         return false;
+    }
+
+    public Optional<User> loginUser(String email, String passw) {
+
+        Optional<Account> account = accountService.getAccount(email, passw);
+
+        if (account.isPresent()) {
+            Account foundAccount = account.get();
+
+            return userRepository.getUser(email, passw, foundAccount);
+        } else {
+            return Optional.empty();
+        }
+
     }
 }

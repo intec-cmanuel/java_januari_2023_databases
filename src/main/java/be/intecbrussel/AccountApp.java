@@ -4,6 +4,7 @@ import be.intecbrussel.model.Account;
 import be.intecbrussel.model.User;
 import be.intecbrussel.service.LoginService;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class AccountApp {
@@ -13,7 +14,10 @@ public class AccountApp {
         Scanner scanner = new Scanner(System.in);
         int userChoice = scanner.nextInt();
 
-        switch(userChoice) {
+
+
+
+        switch (userChoice) {
             case 1:
                 register();
                 break;
@@ -51,6 +55,29 @@ public class AccountApp {
     }
 
     private static void login() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("What is your email");
+        String email = scanner.nextLine();
+
+        System.out.println("What is your password");
+        String passw = scanner.nextLine();
+
+        LoginService loginService = new LoginService();
+
+        Optional<User> userSuccessLogin = loginService.login(email, passw);
+
+        if (userSuccessLogin.isPresent()) {
+            System.out.println("USER: " + " userID " + userSuccessLogin.get().getId() + " fname " +
+                                       userSuccessLogin.get().getFname() + " last name " +
+                                       userSuccessLogin.get().getLname() + " email " +
+                                       userSuccessLogin.get().getAccount().getEmail());
+            System.out.println("Successfully login");
+        } else {
+            System.out.println("Email or password don't match");
+        }
+
 
     }
 }
+
