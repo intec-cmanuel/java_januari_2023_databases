@@ -12,13 +12,27 @@ public class AccountRepository {
 
 
     public boolean createAccount(Account account) {
-        String query = String.format("INSERT INTO Account VALUES ( '%s' , '%s' );", account.getEmail(), account.getPassw());
+//        String query = String.format("INSERT INTO Account VALUES ( '%s' , '%s' );", account.getEmail(), account.getPassw());
+        String query = String.format("update Account set passw = '%s'", account.getPassw());
+/*
+UPDATE `accountapp`.`account`
+SET
+`passw` = 'test';
+ */
+
 
         Connection connection = MySQLConfiguration.getConnection();
 
         try {
+            connection.setAutoCommit(false);
             Statement statement = connection.createStatement();
-            statement.executeUpdate(query); // INSERT DATA
+            int rowsAffected = statement.executeUpdate(query); // INSERT DATA
+            System.out.println(rowsAffected);
+            if (rowsAffected != 1) {
+                connection.rollback();
+            } else {
+                connection.commit();
+            }
             // statement.executeQuery(query); // SELECT DATA
             connection.close();
 
@@ -65,6 +79,7 @@ public class AccountRepository {
         String query = "INSERT INTO Account VALUES (?, ?); ";
 
         try (Connection connection = MySQLConfiguration.getConnection()) {
+            connection.setAutoCommit(false);
 
             PreparedStatement statement = connection.prepareStatement(query);
 
@@ -74,8 +89,9 @@ public class AccountRepository {
                 statement.addBatch();
             }
 
-            statement.clearBatch();
-            statement.executeBatch();
+            int[] rowsAffected = statement.executeBatch();
+
+            connection.commit();
 
         } catch (SQLException e) {
             System.err.println("IT FAILED");
