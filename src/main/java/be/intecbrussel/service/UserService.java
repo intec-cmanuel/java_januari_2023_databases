@@ -20,17 +20,16 @@ public class UserService {
         return false;
     }
 
-    public Optional<User> loginUser(String email, String passw) {
-
-        Optional<Account> account = accountService.getAccount(email, passw);
+    public Optional<User> getUser(String email) {
+        Optional<Account> account = accountService.getAccount(email);
 
         if (account.isPresent()) {
             Account foundAccount = account.get();
+            Optional<User> user = userRepository.getUser(foundAccount);
 
-            return userRepository.getUser(email, passw, foundAccount);
+            return user;
         } else {
             return Optional.empty();
         }
-
     }
 }

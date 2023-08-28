@@ -8,8 +8,8 @@ import java.util.Properties;
 public class MySQLConfiguration {
 
     public static Connection getConnection() {
-        String user = "JeanJean"; // access to all DB -> make user and give access to what you want to use JeanJean
-        String passw = "password";
+        String user = "root"; // access to all DB -> make user and give access to what you want to use JeanJean
+        String passw = "intec-123";
         String url = "localhost";
         String port = "3306";
         String database = "accountapp";

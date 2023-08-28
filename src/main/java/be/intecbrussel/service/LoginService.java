@@ -17,7 +17,12 @@ public class LoginService {
 
 
     public Optional<User> login(String email, String passw) {
+        Optional<User> user = userService.getUser(email);
 
-        return userService.loginUser(email, passw);
+        if (user.isPresent() && user.get().getAccount().getPassw().equals(passw)) {
+            return user;
+        }
+
+        return Optional.empty();
     }
 }

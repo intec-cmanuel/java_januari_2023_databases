@@ -12,15 +12,7 @@ public class AccountService {
         return accountRepository.createAccount(account);
     }
 
-    public Optional<Account> getAccount(String email, String passw) {
-
-        Optional<Account> account = accountRepository.getAccount(email, passw);
-
-        if ((account.isPresent()) || (passw.equals(account.get().getPassw()))) {
-            return account;
-        }else {
-            return Optional.empty();
-        }
-
+    public Optional<Account> getAccount(String email) {
+        return accountRepository.getAccount(email);
     }
 }

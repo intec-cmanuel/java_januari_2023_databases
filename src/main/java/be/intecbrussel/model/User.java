@@ -8,7 +8,7 @@ public class User {
     private String lname;
     private Account account;
 
-    private User(long id, String fname, String lname, Account account) {
+    public User(long id, String fname, String lname, Account account) {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
@@ -41,5 +41,15 @@ public class User {
 
     public void setLname(String lname) {
         this.lname = lname;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fname='" + fname + '\'' +
+                ", lname='" + lname + '\'' +
+                ", account=" + account +
+                '}';
     }
 }

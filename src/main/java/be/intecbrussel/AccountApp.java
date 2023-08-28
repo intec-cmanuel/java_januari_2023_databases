@@ -1,6 +1,5 @@
 package be.intecbrussel;
 
-import be.intecbrussel.model.Account;
 import be.intecbrussel.model.User;
 import be.intecbrussel.service.LoginService;
 
@@ -68,11 +67,8 @@ public class AccountApp {
         Optional<User> userSuccessLogin = loginService.login(email, passw);
 
         if (userSuccessLogin.isPresent()) {
-            System.out.println("USER: " + " userID " + userSuccessLogin.get().getId() + " fname " +
-                                       userSuccessLogin.get().getFname() + " last name " +
-                                       userSuccessLogin.get().getLname() + " email " +
-                                       userSuccessLogin.get().getAccount().getEmail());
-            System.out.println("Successfully login");
+            System.out.println(userSuccessLogin.get());
+            System.out.println("Successfully logged in");
         } else {
             System.out.println("Email or password don't match");
         }

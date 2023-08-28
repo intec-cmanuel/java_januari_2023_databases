@@ -21,5 +21,11 @@ public class Account {
         this.passw = passw;
     }
 
-
+    @Override
+    public String toString() {
+        return "Account{" +
+                "email='" + email + '\'' +
+                ", passw='" + passw + '\'' +
+                '}';
+    }
 }
