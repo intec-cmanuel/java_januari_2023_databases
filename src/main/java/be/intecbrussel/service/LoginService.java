@@ -3,6 +3,7 @@ package be.intecbrussel.service;
 import be.intecbrussel.model.Account;
 import be.intecbrussel.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public class LoginService {
@@ -24,5 +25,9 @@ public class LoginService {
         }
 
         return Optional.empty();
+    }
+
+    public void registerManyUsers(List<User> userList) {
+        userService.createManyUsers(userList);
     }
 }

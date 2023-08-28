@@ -4,6 +4,7 @@ import be.intecbrussel.config.MySQLConfiguration;
 import be.intecbrussel.model.Account;
 
 import java.sql.*;
+import java.util.List;
 import java.util.Optional;
 
 public class AccountRepository {
@@ -41,6 +42,8 @@ public class AccountRepository {
 
             System.out.println(statement);
 
+            statement.addBatch();
+
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -56,6 +59,28 @@ public class AccountRepository {
         }
 
         return Optional.empty();
+    }
+
+    public void createManyAccounts(List<Account> accountList) {
+        String query = "INSERT INTO Account VALUES (?, ?); ";
+
+        try (Connection connection = MySQLConfiguration.getConnection()) {
+
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            for (Account account : accountList) {
+                statement.setString(1, account.getEmail());
+                statement.setString(2, account.getPassw());
+                statement.addBatch();
+            }
+
+            statement.clearBatch();
+            statement.executeBatch();
+
+        } catch (SQLException e) {
+            System.err.println("IT FAILED");
+            e.printStackTrace();
+        }
     }
 
 
